@@ -1,0 +1,39 @@
+.chapter {
+  hr {
+    border: none;
+  }
+  hr.chapter-end {
+    background: url(https://static.8cache.com/img/spriteimg_new_white_op.png) 0 -51px
+      no-repeat;
+    width: 277px;
+    height: 35px;
+  }
+  hr.chapter-start {
+    background: url(//static.8cache.com/img/spriteimg_new_white_op.png) -200px -27px
+      no-repeat;
+    width: 59px;
+    height: 20px;
+  }
+  &__header {
+    text-align: center;
+  }
+  &__content {
+    padding: 20px 10px;
+  }
+  &__story-name {
+    color: #690;
+    text-transform: uppercase;
+  }
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .button {
+      padding: 11px 22px;
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+}

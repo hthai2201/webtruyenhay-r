@@ -1,0 +1,234 @@
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.4rem;
+  background: url(//static.8cache.com/img/bg.jpg) top center repeat-x #f4f4f4;
+  color: #4e4e4e;
+  ul {
+    padding: 5px;
+  }
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
+    &:focus {
+    }
+  }
+  button,
+  input {
+    padding: 5px 10px;
+    border: none;
+    background: white;
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+  section {
+    margin-bottom: 15px;
+  }
+  ul {
+    list-style: none;
+  }
+  .button {
+    padding: 5px 10px;
+    display: inline-block;
+    &:hover,
+    &:focus {
+      outline: none;
+    }
+  }
+  .list-title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+
+    a,
+    a:hover,
+    a:focus {
+      color: #4e4e4e;
+    }
+    select {
+      width: unset;
+      font-size: 20px;
+      background: #d2d2d2;
+      border: 1px solid;
+    }
+    h2 {
+      font-family: 'Roboto Condensed', Tahoma, sans-serif;
+      font-size: 20px;
+      height: 40px;
+      line-height: 40px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-bottom: 1px solid #4e4e4e;
+      margin-bottom: 0;
+    }
+  }
+  .panel {
+    background: #ecf0f1;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    .row {
+      a {
+        display: block;
+        &:hover {
+          background: #d2d2d2;
+        }
+      }
+    }
+    a,
+    a:hover,
+    a:focus {
+      color: #4e4e4e;
+    }
+  }
+  .border-row {
+    > div {
+      height: 40px;
+
+      border-left: dashed 1px #ccc;
+      border-bottom: dashed 1px #ccc;
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+  .label-primary {
+    background: #2a5893;
+  }
+  .label-full {
+    width: 34px;
+    height: 50px;
+    position: absolute;
+    display: block;
+    margin: 140px 0 0 -7px;
+    z-index: 1;
+    background: transparent url(https://static.8cache.com/img/full-label.png)
+      no-repeat;
+  }
+  .loading {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    div {
+      display: inline-block;
+      position: absolute;
+      left: 8px;
+      width: 16px;
+      background: currentColor;
+      animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+      &:nth-child(1) {
+        left: 8px;
+        animation-delay: -0.24s;
+      }
+      &:nth-child(2) {
+        left: 32px;
+        animation-delay: -0.12s;
+      }
+      &:nth-child(3) {
+        left: 56px;
+        animation-delay: 0;
+      }
+    }
+  }
+  .text-overflow-2-lines {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
+  .pagination {
+    padding: 20px 0;
+    .page-item {
+      border-bottom: 1px solid #ddd;
+      border-top: 1px solid #ddd;
+
+      &:first-child {
+        border-left: 1px solid #ddd;
+      }
+      &:last-child {
+        border-right: 1px solid #ddd;
+      }
+      &.active,
+      &:hover {
+        .page-link {
+          background-color: #34495e;
+          border-color: #34495e;
+          color: white;
+        }
+      }
+      .page-link {
+        padding: 0.5rem 1rem;
+        color: #4e4e4e;
+        border: none;
+      }
+    }
+  }
+  a.text-primary {
+    color: #4e4e4e !important;
+    &:hover,
+    &:focus {
+      color: #4e4e4e !important;
+      text-decoration: underline;
+    }
+  }
+  a {
+    color: #4e4e4e;
+    &:hover,
+    &:focus {
+      color: #4e4e4e;
+      text-decoration: underline;
+    }
+  }
+  .bg-none {
+    background: transparent;
+  }
+  .primary-btn {
+    background: #34495e;
+    color: white;
+
+    &:focus,
+    &:hover {
+      background: rgba($color: #34495e, $alpha: 0.8);
+      color: rgba($color: white, $alpha: 0.8);
+      text-decoration: none;
+    }
+  }
+  .box-notice {
+    margin: 10px auto;
+    width: 420px;
+    padding: 5px;
+    border: 1px dashed #2d9fd8;
+    border-radius: 5px;
+  }
+  .disabled {
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.5;
+  }
+}
+
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
+  }
+}
