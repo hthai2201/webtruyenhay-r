@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Funtional } from '../../helpers';
 import { storyActions } from '../../_actions';
-import Loading from '../../components/general/Loading';
-import Pagination from '../../components/general/Pagination';
 import StoryThumbList from '../../components/story/StoryThumbList';
 import { configActions } from '../../_actions/config.actions';
 
@@ -42,7 +39,7 @@ const FullStory = () => {
         setCategory(newCategory);
       }
     }
-    console.log('run fullstory 1');
+
     dispatch(storyActions.getAllStoriesFull(newOptions));
     setAllStoriesFullOptions(newOptions);
   };
@@ -57,7 +54,6 @@ const FullStory = () => {
       (!allStoriesFull ||
         (categorySlug && allStoriesFullOptions.categorySlug !== categorySlug))
     ) {
-      console.log('run fullstory 2');
       dispatch(
         storyActions.getAllStoriesFull({
           ...allStoriesFullOptions,
@@ -76,11 +72,6 @@ const FullStory = () => {
       ])
     );
   }, []);
-  // Function
-
-  const onChangeAllStoriesFullCategoryOptions = e => {
-    updateAllStoriesFullOptions('categorySlug', e.target.value);
-  };
   const onChangePage = page => {
     updateAllStoriesFullOptions('page', page);
   };
@@ -121,14 +112,14 @@ const FullStory = () => {
               </div>
               <div className="row text-center">
                 {allCategories && allCategories.length
-                  ? allCategories.map(category => {
+                  ? allCategories.map(categoryItem => {
                       return (
-                        <div className="col-md-6" key={category.slug}>
+                        <div className="col-md-6" key={categoryItem.slug}>
                           <a
-                            href={`/the-loai/${category.slug}`}
+                            href={`/the-loai/${categoryItem.slug}`}
                             className="p-2"
                           >
-                            {category.name}
+                            {categoryItem.name}
                           </a>
                         </div>
                       );

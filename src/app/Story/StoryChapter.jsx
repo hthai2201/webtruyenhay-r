@@ -1,10 +1,11 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useLocation, Link, useHistory } from 'react-router-dom';
-import queryString from 'query-string';
-import { storyActions } from '../../_actions';
+import { useParams, Link, useHistory } from 'react-router-dom';
+import { storyActions, userActions } from '../../_actions';
 import Loading from '../../components/general/Loading';
 import { configActions } from '../../_actions/config.actions';
+
 const StoryChapter = () => {
   const history = useHistory();
   const params = useParams();
@@ -13,23 +14,28 @@ const StoryChapter = () => {
   const chapter = useSelector(_ => _.story.chapter);
   const getChapterLoading = useSelector(_ => _.story.getChapterLoading);
   const getChapterError = useSelector(_ => _.story.getChapterError);
+  const getChapterSuccess = useSelector(_ => _.story.getChapterSuccess);
+  const toChapter = (storySlug, chapterId) => {
+    history.push(`/${storySlug}/chuong-${chapterId}`);
+  };
   const onChangeChapter = e => {
     const { storySlug } = params;
     const { value: chapterId } = e.target;
     if (storySlug && chapterId) {
-      history.push(`/${storySlug}/chuong-${chapterId}`);
+      toChapter(storySlug, chapterId);
     }
   };
+
   useEffect(() => {
     const { chapterId, storySlug } = params;
-    console.log(chapterId);
+
     if (
       chapterId &&
       storySlug &&
       !getChapterLoading &&
       !getChapterError &&
       (!chapter ||
-        chapter.chapterId !== chapterId ||
+        chapter.chapterId !== parseInt(chapterId, 10) ||
         (chapter.story && chapter.story.slug !== storySlug))
     ) {
       dispatch(storyActions.getChapter({ chapterId, slug: storySlug }));
@@ -41,13 +47,11 @@ const StoryChapter = () => {
     content,
     story = {
       name: 'Tên truyện',
-
-      chapters: [
-        { chapterId: 1, name: 'test1' },
-        { chapterId: 2, name: 'test' },
-      ],
+      chapters: [],
+      chapterCount: 0,
     },
   } = chapter || {};
+
   useEffect(() => {
     dispatch(
       configActions.setBreadcrumb([
@@ -62,23 +66,28 @@ const StoryChapter = () => {
       ])
     );
   }, [chapter]);
+  useEffect(() => {
+    if (getChapterSuccess) {
+      dispatch(userActions.getUserSession());
+    }
+  }, [getChapterSuccess]);
   const renderChapterNavigation = () => {
     return (
       <div className="chapter__nav">
         <Link
-          to="/"
+          to={`/${story.slug}/chuong-${chapterId - 1}`}
           className={`button chapter__nav-item  btn-success mr-2 ${
             chapterId === 1 ? 'disabled' : ''
           }`}
         >
-          <i class="fa fa-chevron-left mr-1" aria-hidden="true"></i> Chương
+          <i className="fa fa-chevron-left mr-1" aria-hidden="true"></i> Chương
           trước
         </Link>
         {showChapterSelect ? (
           <div className="chapter__nav-select">
             <select
               onChange={onChangeChapter}
-              class=" button btn-success"
+              className=" button btn-success"
               aria-label="Chọn thể loại"
               defaultValue={chapterId}
             >
@@ -86,7 +95,7 @@ const StoryChapter = () => {
                 story.chapters.map(chap => {
                   return (
                     <option key={chap.chapterId} value={chap.chapterId}>
-                      {chap.name}
+                      Chương {chap.chapterId}
                     </option>
                   );
                 })}
@@ -98,13 +107,16 @@ const StoryChapter = () => {
             className="button chapter__nav-item btn-success"
             onClick={() => setShowChapterSelect(true)}
           >
-            <i class="fa fa-list-alt" aria-hidden="true"></i>
+            <i className="fa fa-list-alt" aria-hidden="true"></i>
           </button>
         )}
 
-        <Link to="/" className="button chapter__nav-item  btn-success ml-2">
+        <Link
+          to={`/${story.slug}/chuong-${story.chapterCount}`}
+          className="button chapter__nav-item  btn-success ml-2"
+        >
           Chương tiếp
-          <i class="fa fa-chevron-right ml-2" aria-hidden="true"></i>
+          <i className="fa fa-chevron-right ml-2" aria-hidden="true"></i>
         </Link>
       </div>
     );
@@ -144,7 +156,7 @@ const StoryChapter = () => {
           <div className="chapter__footer">
             <hr className="chapter-end" />
             {renderChapterNavigation()}
-            <div class="bg-light text-center visible-md visible-lg box-notice">
+            <div className="bg-light text-center visible-md visible-lg box-notice">
               Bạn có thể dùng phím mũi tên hoặc WASD để lùi/sang chương.
             </div>
           </div>

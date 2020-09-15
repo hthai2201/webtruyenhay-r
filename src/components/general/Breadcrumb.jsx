@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 const Breadcrumb = () => {
   const location = useLocation();
   const breadcrumbList = useSelector(_ => _.config.breadcrumbList) || [];
@@ -8,7 +9,7 @@ const Breadcrumb = () => {
   let baseLink = '/';
   return (
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
+      <ol className="breadcrumb">
         {location.pathname === '/' ? (
           <li className="breadcrumb-item">
             Đọc truyện online, đọc truyện chữ, truyện full, truyện hay. Tổng hợp
@@ -16,15 +17,15 @@ const Breadcrumb = () => {
           </li>
         ) : (
           <>
-            <li class="breadcrumb-item">
+            <li className="breadcrumb-item">
               <Link to="/">
-                <i class="fa fa-home mr-1 " aria-hidden="true"></i>Truyện
+                <i className="fa fa-home mr-1 " aria-hidden="true"></i>Truyện
               </Link>
             </li>
             {breadcrumbList.map(item => {
               baseLink = baseLink + item.path + '/';
               return (
-                <li key={item.path} class="breadcrumb-item">
+                <li key={item.path} className="breadcrumb-item">
                   <Link to={baseLink}>{item.name}</Link>
                 </li>
               );

@@ -219,6 +219,10 @@ body {
     user-select: none;
     opacity: 0.5;
   }
+  .no-click {
+    pointer-events: none;
+    user-select: none;
+  }
 }
 
 @keyframes lds-facebook {

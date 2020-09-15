@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import HotStoryPanel from '../../components/story/HotStoryPanel';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import queryString from 'query-string';
-import { storyActions } from '../../_actions';
+import HotStoryPanel from '../../components/story/HotStoryPanel';
+import { storyActions, userActions } from '../../_actions';
 import RatingStory from './RatingStory';
 import Loading from '../../components/general/Loading';
 import { storyStatusContants } from '../../_constants/story.constants';
@@ -17,10 +17,15 @@ const StoryDetail = () => {
   const [chapterPagination, setChapterPagination] = useState({
     chapters: [],
   });
+  const [isRatedStory, setIsRatedStory] = useState(false);
+  const [lastReadChapterId, setLastReadChapterId] = useState(null);
   const story = useSelector(_ => _.story.story);
+  const historyStories = useSelector(_ => _.user.historyStories);
+  const ratedStories = useSelector(_ => _.user.ratedStories);
+  const rateStorySuccess = useSelector(_ => _.story.rateStorySuccess);
   const getStoryLoading = useSelector(_ => _.story.getStoryLoading);
+  const rateStoryLoading = useSelector(_ => _.story.rateStoryLoading);
   const getStoryError = useSelector(_ => _.story.getStoryError);
-  const abc = useSelector(_ => _.story.allStoriesHotInDay);
   const onClickChapterPage = index => {
     if (
       index < 0 &&
@@ -35,6 +40,10 @@ const StoryDetail = () => {
           : [],
       });
     }
+  };
+  const onClickRateStory = rate => {
+    const { storySlug } = params;
+    dispatch(storyActions.rateStory({ slug: storySlug, rate }));
   };
   useEffect(() => {
     const { storySlug } = params;
@@ -83,6 +92,29 @@ const StoryDetail = () => {
       );
     }
   }, [story]);
+  useEffect(() => {
+    const historyStory =
+      historyStories && historyStories.length
+        ? historyStories.find(item => item.slug === params.storySlug)
+        : null;
+    if (historyStory) {
+      setLastReadChapterId(historyStory.lastReadChapter.chapterId);
+    }
+  }, [params, historyStories]);
+  useEffect(() => {
+    const ratedStory =
+      ratedStories && ratedStories.length
+        ? ratedStories.find(item => item.slug === params.storySlug)
+        : null;
+    if (ratedStory) {
+      setIsRatedStory(true);
+    }
+  }, [params, ratedStories]);
+  useEffect(() => {
+    if (rateStorySuccess) {
+      dispatch(userActions.getUserSession());
+    }
+  }, [rateStorySuccess]);
   const {
     name,
     slug,
@@ -93,12 +125,14 @@ const StoryDetail = () => {
     rate = [],
     cover,
     chapterCount = 0,
-    sameAuthorStories = abc,
-    chapters = [],
+    sameAuthorStories = [],
   } = story || {};
+
   const avgRate = rate.length
-    ? rate.reduce((sum, item) => sum + item.rating, 0) / rate.length
-    : 5;
+    ? Math.round(
+        (100 * rate.reduce((sum, item) => sum + item.rate, 0)) / rate.length
+      ) / 100
+    : 10;
   const renderStoryInfo = () => {
     if (getStoryLoading) {
       return <Loading />;
@@ -128,7 +162,11 @@ const StoryDetail = () => {
             <h2 className="text-center">{name}</h2>
           </div>
           <div className="rate-wrap">
-            <RatingStory rate={avgRate} />
+            <RatingStory
+              rate={avgRate}
+              disabled={rateStoryLoading || isRatedStory}
+              onClick={onClickRateStory}
+            />
             <div>
               <small>
                 Đánh giá: <b>{avgRate}</b>/10 từ <b>{rate.length} lượt</b>
@@ -145,12 +183,21 @@ const StoryDetail = () => {
             <Link to={`/${slug}/chuong-1`} className="button primary-btn mr-2">
               Đọc từ đầu
             </Link>
-            <Link
-              to={`/${slug}/chuong-${chapterCount}`}
-              className="button primary-btn"
-            >
-              Đọc tiếp
-            </Link>
+            {lastReadChapterId ? (
+              <Link
+                to={`/${slug}/chuong-${lastReadChapterId}`}
+                className="button primary-btn"
+              >
+                Đọc tiếp
+              </Link>
+            ) : (
+              <Link
+                to={`/${slug}/chuong-${chapterCount}`}
+                className="button primary-btn"
+              >
+                Đọc chương cuối
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -176,12 +223,16 @@ const StoryDetail = () => {
       <div className="row">
         {twoCols.map((col, colIndex) => {
           return (
+            // eslint-disable-next-line react/no-array-index-key
             <div key={colIndex} className="col-sm-6">
               <ul className="list-chapter">
                 {col.map(chapter => {
                   return (
                     <li key={chapter.slug} className="text-truncate">
-                      <i class="fa fa-certificate mr-1" aria-hidden="true"></i>
+                      <i
+                        className="fa fa-certificate mr-1"
+                        aria-hidden="true"
+                      ></i>
                       <Link to={`/${slug}/chuong-${chapter.chapterId}`}>
                         Chương {chapter.chapterId}: {chapter.name}
                       </Link>
@@ -206,11 +257,11 @@ const StoryDetail = () => {
   const renderSameAuthorStories = () => {
     return (
       <ul>
-        {sameAuthorStories.map(story => {
+        {sameAuthorStories.map(storyIndex => {
           return (
-            <li key={story.slug}>
-              <i class="fa fa-chevron-right mr-1" aria-hidden="true"></i>
-              <Link to={`/${story.slug}`}>{story.name}</Link>
+            <li key={storyIndex.slug}>
+              <i className="fa fa-chevron-right mr-1" aria-hidden="true"></i>
+              <Link to={`/${storyIndex.slug}`}>{storyIndex.name}</Link>
             </li>
           );
         })}

@@ -184,6 +184,7 @@ export function storyReducer(state = INITIAL_STATE, action) {
         getStoryError: action.error,
       };
     }
+
     // GET_CHAPTER
     case storyConstants.GET_CHAPTER: {
       return {
@@ -208,6 +209,37 @@ export function storyReducer(state = INITIAL_STATE, action) {
         ...state,
         getChapterLoading: false,
         getChapterError: action.error,
+      };
+    }
+
+    // RATE_STORY
+    case storyConstants.RATE_STORY: {
+      return {
+        ...state,
+        rateStoryLoading: true,
+        rateStoryError: null,
+        rateStorySuccess: false,
+      };
+    }
+    case storyConstants.RATE_STORY_SUCCESS: {
+      const { rate } = action.options;
+      const { story } = state;
+      if (story && story.rate) {
+        story.rate.push({ rate });
+      }
+      return {
+        ...state,
+        rateStoryLoading: false,
+        rateStorySuccess: true,
+        story,
+      };
+    }
+
+    case storyConstants.RATE_STORY_FAILURE: {
+      return {
+        ...state,
+        rateStoryLoading: false,
+        rateStoryError: action.error,
       };
     }
 

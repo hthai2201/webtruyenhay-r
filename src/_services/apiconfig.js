@@ -20,12 +20,16 @@ export const userApi = create({
   timeout: 300000,
 });
 
-export const baseParams = {};
+export const getBaseParams = () => {
+  const SSID = localStorage.getItem('SSID');
+  return {
+    SSID,
+  };
+};
 
 export const handleResponse = response => {
   if (!response.ok) {
     if (response.status === 401) {
-   
       // auto logout if 401 response returned from api
       localStorage.removeItem('USER_TOKEN');
       window.location.reload(true);

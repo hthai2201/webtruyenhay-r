@@ -1,7 +1,7 @@
 .header {
   background-color: $darkBlue;
   margin-bottom: 20px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
   a {
     color: $whiteText;
 
@@ -25,6 +25,9 @@
   }
   .dropdown.show {
     background-color: $darkBlue2;
+    a {
+      color: white !important;
+    }
   }
   .dropdown-menu {
     background-color: $darkBlue2;

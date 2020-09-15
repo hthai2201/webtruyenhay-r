@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import RenderList from '../general/RenderList';
+
 const CategoryPanel = () => {
-  const dispatch = useDispatch();
   const allCategories = useSelector(_ => _.category.allCategories);
   const getAllCategoriesLoading = useSelector(
     _ => _.category.getAllCategoriesLoading

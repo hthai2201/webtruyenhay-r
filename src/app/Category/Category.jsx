@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Funtional } from '../../helpers';
 import { storyActions } from '../../_actions';
-import Loading from '../../components/general/Loading';
-import Pagination from '../../components/general/Pagination';
 import StoryThumbList from '../../components/story/StoryThumbList';
 import CategoryPanel from '../../components/Category/CategoryPanel';
 import HotStoryPanel from '../../components/story/HotStoryPanel';
@@ -71,9 +68,9 @@ const Category = () => {
   }, [category]);
   // Function
 
-  const onChangeAllStoriesCategoryOptions = e => {
-    updateAllStoriesOptions('categorySlug', e.target.value);
-  };
+  // const onChangeAllStoriesCategoryOptions = e => {
+  //   updateAllStoriesOptions('categorySlug', e.target.value);
+  // };
   const onChangePage = page => {
     updateAllStoriesOptions('page', page);
   };

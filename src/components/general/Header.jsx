@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import debounce from 'lodash/debounce';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,9 +8,7 @@ import Loading from './Loading';
 import Breadcrumb from './Breadcrumb';
 
 const Header = ({ allCategories = [] }) => {
-  const [showSearchResultBox, setShowSearchResultBox] = useState(false);
   const [q, setQ] = useState('');
-  const breadcrumbList = [{ name: 'abc' }];
   const searchedStories = useSelector(_ => _.story.searchedStories);
   const searchStoriesLoading = useSelector(_ => _.story.searchStoriesLoading);
   const searchStoriesError = useSelector(_ => _.story.searchStoriesError);
@@ -125,6 +123,7 @@ const Header = ({ allCategories = [] }) => {
                     {allCategoriesSlice.map((colItem, colItemIndex) => {
                       return (
                         <div
+                          // eslint-disable-next-line react/no-array-index-key
                           key={colItemIndex}
                           className={`col-md-${12 / numCol}`}
                         >

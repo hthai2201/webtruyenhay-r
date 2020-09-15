@@ -1,9 +1,11 @@
 // import { authHeader } from '../helpers';
 
-import { userApi, handleResponse, baseParams } from './apiconfig';
+import { userApi, handleResponse, getBaseParams } from './apiconfig';
 
 const getAllCategories = () => {
-  return userApi.get(`/categories`, { ...baseParams }).then(handleResponse);
+  return userApi
+    .get(`/categories`, { ...getBaseParams() })
+    .then(handleResponse);
 };
 
 export const categoryServices = {

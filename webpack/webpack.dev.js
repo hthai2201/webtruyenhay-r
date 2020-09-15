@@ -21,6 +21,7 @@ module.exports = {
             options: {
               sourceMap: true,
               localsConvention: 'camelCase',
+              // modules: true,
               // modules: {
               //   localIdentName: '[local]___[hash:base64:5]',
               // },
@@ -41,6 +42,7 @@ module.exports = {
     config: JSON.stringify({
       staffApi: '/',
       userApi: 'https://webtruyenhay.herokuapp.com/',
+      userApi1: 'http://localhost:8080/',
       rootUrl: '/',
       staff: '/staff',
     }),

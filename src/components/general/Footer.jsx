@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = ({ allCategories = [] }) => {
   return (
@@ -19,31 +20,32 @@ const Footer = ({ allCategories = [] }) => {
               {allCategories.length
                 ? allCategories.map((result, index) => {
                     return (
+                      // eslint-disable-next-line react/no-array-index-key
                       <li key={index}>
-                        <a href="/" className="footer__tag">
+                        <Link to="/" className="footer__tag">
                           {result.name}
-                        </a>
+                        </Link>
                       </li>
                     );
                   })
                 : null}
               <li className="text-right pull-right">
-                <a href="https://truyenfull.vn/contact/" title="Contact">
+                <Link to="https://truyenfull.vn/contact/" title="Contact">
                   Contact
-                </a>{' '}
+                </Link>{' '}
                 -{' '}
-                <a href="https://truyenfull.vn/tos/" title="Terms of Service">
+                <Link to="https://truyenfull.vn/tos/" title="Terms of Service">
                   ToS
-                </a>
-                <a
+                </Link>
+                <Link
                   className="backtop"
                   title="Trở lên đầu trang"
-                  href="#wrap"
+                  to="#wrap"
                   rel="nofollow"
                   aria-label="Trở về đầu trang"
                 >
                   <span className="glyphicon glyphicon-upload"></span>
-                </a>{' '}
+                </Link>{' '}
               </li>
             </ul>
           </div>

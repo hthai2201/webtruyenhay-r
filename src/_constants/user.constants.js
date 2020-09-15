@@ -1,13 +1,7 @@
-export const userConstants = {
-  LOGIN: 'LOGIN',
-  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-  LOGIN_FAILURE: 'LOGIN_FAILURE',
+import keymirror from 'keymirror';
 
-  REGISTER: 'REGISTER',
-  REGISTER_SUCCESS: 'REGISTER_SUCCESS',
-  REGISTER_FAILURE: 'REGISTER_FAILURE',
-
-  GET_USER_INFO: 'GET_USER_INFO',
-  GET_USER_INFO_SUCCESS: 'GET_USER_INFO_SUCCESS',
-  GET_USER_INFO_FAILURE: 'GET_USER_INFO_FAILURE',
-};
+export const userConstants = keymirror({
+  GET_USER_SESSION: undefined,
+  GET_USER_SESSION_SUCCESS: undefined,
+  GET_USER_SESSION_FAILURE: undefined,
+});

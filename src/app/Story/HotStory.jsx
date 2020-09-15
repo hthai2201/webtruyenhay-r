@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Funtional } from '../../helpers';
 import { storyActions } from '../../_actions';
-import Loading from '../../components/general/Loading';
-import Pagination from '../../components/general/Pagination';
 import StoryThumbList from '../../components/story/StoryThumbList';
 import { configActions } from '../../_actions/config.actions';
 
@@ -40,7 +37,7 @@ const HotStory = () => {
         setCategory(newCategory);
       }
     }
-    console.log('run hotstory 1');
+
     dispatch(storyActions.getAllStoriesHot(newOptions));
     setAllStoriesHotOptions(newOptions);
   };
@@ -55,7 +52,6 @@ const HotStory = () => {
       (!allStoriesHot ||
         (categorySlug && allStoriesHotOptions.categorySlug !== categorySlug))
     ) {
-      console.log('run hotstory 2');
       dispatch(
         storyActions.getAllStoriesHot({
           ...allStoriesHotOptions,
@@ -74,11 +70,6 @@ const HotStory = () => {
       ])
     );
   }, []);
-  // Function
-
-  const onChangeAllStoriesHotCategoryOptions = e => {
-    updateAllStoriesHotOptions('categorySlug', e.target.value);
-  };
   const onChangePage = page => {
     updateAllStoriesHotOptions('page', page);
   };
@@ -119,14 +110,14 @@ const HotStory = () => {
               </div>
               <div className="row text-center">
                 {allCategories && allCategories.length
-                  ? allCategories.map(category => {
+                  ? allCategories.map(categoryItem => {
                       return (
-                        <div className="col-md-6" key={category.slug}>
+                        <div className="col-md-6" key={categoryItem.slug}>
                           <a
-                            href={`/the-loai/${category.slug}`}
+                            href={`/the-loai/${categoryItem.slug}`}
                             className="p-2"
                           >
-                            {category.name}
+                            {categoryItem.name}
                           </a>
                         </div>
                       );

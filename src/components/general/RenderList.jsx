@@ -2,7 +2,6 @@ import React from 'react';
 import Loading from './Loading';
 
 const RenderList = ({
-  children,
   list,
   emptyList,
   loading,

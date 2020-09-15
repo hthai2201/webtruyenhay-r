@@ -1,54 +1,15 @@
 import React from 'react';
-const RatingStory = ({ rate = 10 }) => {
-  const RATE_TEXT = [
-    {
-      id: 1,
-      text: 'Không còn gì để nói...',
-    },
-    {
-      id: 2,
-      text: 'WTF',
-    },
-    {
-      id: 3,
-      text: 'Cái gì thế này ?!',
-    },
-    {
-      id: 4,
-      text: 'Haizz',
-    },
-    {
-      id: 5,
-      text: 'Tạm',
-    },
-    {
-      id: 6,
-      text: 'Cũng được',
-    },
-    {
-      id: 7,
-      text: 'Khá đấy',
-    },
-    {
-      id: 8,
-      text: 'Được',
-    },
-    {
-      id: 9,
-      text: 'Hay',
-    },
-    {
-      id: 10,
-      text: 'Tuyệt đỉnh!',
-    },
-  ];
+import { RATE_TEXT } from '../../_constants/story.constants';
 
+const RatingStory = ({ rate = 10, onClick = () => null, disabled }) => {
   return (
-    <div className="rate">
-      {RATE_TEXT.map((item, itemIndex) => {
+    <div className={`rate ${disabled ? 'no-click' : ''}`}>
+      {RATE_TEXT.map(item => {
         return (
           <div
+            role="presentation"
             key={item.id}
+            onClick={() => onClick(item.id)}
             className={`text-truncate rate__item rate__item--${
               rate < item.id ? 'off' : 'on'
             }`}

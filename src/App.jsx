@@ -15,6 +15,7 @@ import HotStory from './app/Story/HotStory';
 import StoryDetail from './app/Story/StoryDetail';
 import StoryChapter from './app/Story/StoryChapter';
 import FullStory from './app/Story/FullStory';
+import Loading from './components/general/Loading';
 
 const ErrorComponent = ({ error }) => (
   <div className="container">
@@ -24,6 +25,7 @@ const ErrorComponent = ({ error }) => (
     <a href="./">Try again!</a>
   </div>
 );
+
 const App = () => {
   // category
   const allCategories = useSelector(_ => _.category.allCategories);
@@ -33,11 +35,7 @@ const App = () => {
   const getAllCategoriesError = useSelector(
     _ => _.category.getAllCategoriesError
   );
-  // user
-  const currentUser = useSelector(_ => _.user.currentUser);
-  const getUserInfoLoading = useSelector(_ => _.user.getUserInfoLoading);
-  const getUserInfoError = useSelector(_ => _.user.getUserInfoError);
-
+  const getUserSessionLoading = useSelector(_ => _.user.getUserSessionLoading);
   const dispatch = useDispatch();
   // categories
   useEffect(() => {
@@ -46,15 +44,12 @@ const App = () => {
     }
   }, []);
   // user
+
+  // session
   useEffect(() => {
-    const token = localStorage.getItem('USER_TOKEN');
-
-    if (token && !getUserInfoLoading && !getUserInfoError) {
-      dispatch(userActions.getUserInfo());
-    }
+    dispatch(userActions.getUserSession());
   }, []);
-
-  const errorHandle = (error, componentStack) => {};
+  const errorHandle = (/* error, componentStack */) => {};
   return (
     <ErrorBoundary FallbackComponent={ErrorComponent} onError={errorHandle}>
       <Router history={history}>
@@ -62,9 +57,6 @@ const App = () => {
           allCategories={allCategories}
           getAllCategoriesLoading={getAllCategoriesLoading}
           getAllCategoriesError={getAllCategoriesError}
-          currentUser={currentUser}
-          userLoading={getUserInfoLoading}
-          getUserInfoError={getUserInfoError}
         />
         <Switch>
           <Route exact path="/" component={Home} />

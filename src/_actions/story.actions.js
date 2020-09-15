@@ -73,11 +73,27 @@ function getStory(options) {
     );
   };
 }
+
 function getChapter(options) {
   const actionStatus = createActionStatus(storyConstants.GET_CHAPTER);
   return dispatch => {
     dispatch(actionStatus.request(options));
     storyServices.getChapter(options).then(
+      data => {
+        dispatch(actionStatus.success(data, options));
+      },
+      error => {
+        dispatch(actionStatus.failure(error, options));
+      }
+    );
+  };
+}
+
+function rateStory(options) {
+  const actionStatus = createActionStatus(storyConstants.RATE_STORY);
+  return dispatch => {
+    dispatch(actionStatus.request(options));
+    storyServices.rateStory(options).then(
       data => {
         dispatch(actionStatus.success(data, options));
       },
@@ -94,4 +110,5 @@ export const storyActions = {
   searchStories,
   getStory,
   getChapter,
+  rateStory,
 };

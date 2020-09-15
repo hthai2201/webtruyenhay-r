@@ -10,6 +10,7 @@ module.exports = {
   output: {
     filename: `${commonPaths.jsFolder}/[name].[hash].js`,
     path: commonPaths.outputPath,
+
     chunkFilename: `${commonPaths.jsFolder}/[name].[chunkhash].js`,
   },
   optimization: {
@@ -58,9 +59,10 @@ module.exports = {
             options: {
               sourceMap: false,
               localsConvention: 'camelCase',
-              modules: {
-                localIdentName: '[local]___[hash:base64:5]',
-              },
+
+              // modules: {
+              //   localIdentName: '[local]___[hash:base64:5]',
+              // },
             },
           },
           'sass-loader',
@@ -76,10 +78,12 @@ module.exports = {
     }),
   ],
   devtool: 'source-map',
-  config: JSON.stringify({
-    staffApi: '/',
-    userApi: 'https://webtruyenhay.herokuapp.com/',
-    rootUrl: '/',
-    staff: '/staff',
-  }),
+  externals: {
+    config: JSON.stringify({
+      staffApi: '/',
+      userApi: 'https://webtruyenhay.herokuapp.com/',
+      rootUrl: '/',
+      staff: '/staff',
+    }),
+  },
 };

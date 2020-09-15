@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { storyActions } from '../../_actions';
 import StoryThumbList from '../../components/story/StoryThumbList';
@@ -8,7 +8,6 @@ import CategoryPanel from '../../components/Category/CategoryPanel';
 import { configActions } from '../../_actions/config.actions';
 
 const SearchStory = () => {
-  const params = useParams();
   const location = useLocation();
   const { q } = queryString.parse(location.search);
   const [searchedStoriesOptions, setSearchedStoriesOptions] = useState({});

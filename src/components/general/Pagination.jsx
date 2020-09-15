@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { min } from 'moment';
+import React from 'react';
+
 const Pagination = ({
   page,
   pageCount,
@@ -66,7 +66,7 @@ const Pagination = ({
       >
         <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
           <a
-            onClick={() => toPage(e, page - 1)}
+            onClick={e => toPage(e, page - 1)}
             className="page-link"
             href="./"
             aria-label="Previous"

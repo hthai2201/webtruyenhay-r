@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RenderList from '../general/RenderList';
 import { storyActions } from '../../_actions';
+
 const HotStoryPanel = () => {
   const [currentTabName, setCurrentTabName] = useState('inDay');
   const dispatch = useDispatch();
@@ -24,15 +25,12 @@ const HotStoryPanel = () => {
   useEffect(() => {
     if (!getAllStoriesHotLoading && !getAllStoriesHotError) {
       if (!allStoriesHotInDay) {
-        console.log('run1');
         dispatch(storyActions.getAllStoriesHot({ inDay: true }));
       }
       if (!allStoriesHotInMonth) {
-        console.log('run2');
         dispatch(storyActions.getAllStoriesHot({ inMonth: true }));
       }
       if (!allStoriesHotInAll) {
-        console.log('run3');
         dispatch(storyActions.getAllStoriesHot({ inAll: true }));
       }
     }

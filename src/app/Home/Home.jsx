@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Funtional } from './../../helpers';
+import { Funtional } from '../../helpers';
 import { storyActions } from '../../_actions';
 import Loading from '../../components/general/Loading';
 import RenderList from '../../components/general/RenderList';
@@ -11,6 +11,7 @@ const Home = () => {
   const [allStoriesFullOptions, setAllStoriesFullOptions] = useState({});
   const [allStoriesHotOptions, setAllStoriesHotOptions] = useState({});
   const dispatch = useDispatch();
+  const historyStories = useSelector(_ => _.user.historyStories);
   const allCategories = useSelector(_ => _.category.allCategories);
   const allStories = useSelector(_ => _.story.allStories);
   const allStoriesFull = useSelector(_ => _.story.allStoriesFull);
@@ -37,7 +38,6 @@ const Home = () => {
       dispatch(storyActions.getAllStoriesFull(allStoriesFullOptions));
     }
     if (!getAllStoriesHotLoading && !allStoriesHot) {
-      console.log('run ue home');
       dispatch(storyActions.getAllStoriesHot(allStoriesHotOptions));
     }
   }, []);
@@ -54,7 +54,7 @@ const Home = () => {
   };
   const updateAllStoriesHotOptions = (prop, value) => {
     const newOptions = { ...allStoriesHotOptions, [prop]: value };
-    console.log('run updateAllStoriesHotOptions home');
+
     dispatch(storyActions.getAllStoriesHot(newOptions));
     setAllStoriesHotOptions(newOptions);
   };
@@ -90,7 +90,7 @@ const Home = () => {
                   {name}
                 </Link>
               </div>
-              <div className="col-md-3">
+              <div className="col-md-3 text-truncate">
                 <span>
                   {categories.map(category => category.name).join(',')}
                 </span>
@@ -120,7 +120,7 @@ const Home = () => {
             list={allStoriesFull}
             loading={getAllStoriesFullLoading}
             error={getAllStoriesFullError}
-            renderItem={(story, storyIndex) => {
+            renderItem={story => {
               return (
                 <div key={story.slug} className="col-4 col-sm-3 col-md-2">
                   <Link to={`/${story.slug}`} className="story-thumb">
@@ -160,7 +160,7 @@ const Home = () => {
             list={otherHotStories}
             loading={getAllStoriesHotLoading}
             error={getAllStoriesHotError}
-            renderItem={(story, storyIndex) => {
+            renderItem={story => {
               return (
                 <Link
                   key={story.slug}
@@ -241,41 +241,41 @@ const Home = () => {
               {renderAllStories()}
             </div>{' '}
             <div className="col-md-4">
-              <div className="panel">
-                <div className="list-title">
-                  <h2>
-                    <Link to="/">TRUYỆN ĐANG ĐỌC</Link>
-                  </h2>
-                </div>
+              {historyStories && historyStories.length ? (
+                <div className="panel">
+                  <div className="list-title">
+                    <h2>
+                      <Link to="/">TRUYỆN ĐANG ĐỌC</Link>
+                    </h2>
+                  </div>
 
-                {allStories && allStories.length
-                  ? allStories.map(story => {
-                      const { slug, name, chapters = [] } = story || {};
-                      const lastChapter = chapters[chapters.length - 1] || {};
-                      const { chapterId: lastChapterId } = lastChapter;
-                      return (
-                        <div key={slug} className="row border-row">
-                          <div className="col-6 text-truncate">
-                            <i
-                              className="fa fa-chevron-right mr-1"
-                              aria-hidden="true"
-                            ></i>
-                            <span className="">{name}</span>
-                          </div>
+                  {historyStories.map(story => {
+                    const { slug, name, lastReadChapter = {} } = story || {};
 
-                          <div className="col-6">
-                            <Link
-                              to={`/${slug}/chuong-${lastChapterId}`}
-                              className="text-info"
-                            >
-                              Đọc tiếp C{lastChapterId}
-                            </Link>
-                          </div>
+                    const { chapterId: lastChapterId } = lastReadChapter;
+                    return (
+                      <div key={slug} className="row border-row">
+                        <div className="col-6 text-truncate">
+                          <i
+                            className="fa fa-chevron-right mr-1"
+                            aria-hidden="true"
+                          ></i>
+                          <span className="">{name}</span>
                         </div>
-                      );
-                    })
-                  : null}
-              </div>
+
+                        <div className="col-6">
+                          <Link
+                            to={`/${slug}/chuong-${lastChapterId}`}
+                            className="text-info"
+                          >
+                            Đọc tiếp C{lastChapterId}
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
 
               <div className="panel">
                 <div className="list-title">
