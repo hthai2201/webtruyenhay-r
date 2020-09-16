@@ -99,16 +99,18 @@ const HotStoryPanel = () => {
                           <h4>
                             <Link to={`/${slug}`}>{name}</Link>
                           </h4>
-                          <small>
+                          <small className="d-flex">
                             {categories.map(category => {
-                              return (
+                              return [
                                 <Link
                                   key={category.slug}
                                   to={`/the-loai/${category.slug}`}
+                                  className="ml-1"
                                 >
                                   {category.name}
-                                </Link>
-                              );
+                                </Link>,
+                                ',',
+                              ];
                             })}
                           </small>
                         </div>

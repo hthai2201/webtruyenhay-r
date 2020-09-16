@@ -16,7 +16,7 @@
       "git add"
     ]
   },
-  "husky": {
+  "husky1": {
     "hooks": {
       "pre-commit": "lint-staged"
     }

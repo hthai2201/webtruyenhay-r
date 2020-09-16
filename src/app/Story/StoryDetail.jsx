@@ -9,6 +9,7 @@ import Loading from '../../components/general/Loading';
 import { storyStatusContants } from '../../_constants/story.constants';
 import Pagination from '../../components/general/Pagination';
 import { configActions } from '../../_actions/config.actions';
+import useFacebookComment from '../../hook/useFacebookComment';
 
 const StoryDetail = () => {
   const location = useLocation();
@@ -133,6 +134,7 @@ const StoryDetail = () => {
         (100 * rate.reduce((sum, item) => sum + item.rate, 0)) / rate.length
       ) / 100
     : 10;
+
   const renderStoryInfo = () => {
     if (getStoryLoading) {
       return <Loading />;
@@ -219,6 +221,7 @@ const StoryDetail = () => {
         Math.ceil(chapterPagination.chapters.length / 2)
       ),
     ];
+
     return (
       <div className="row">
         {twoCols.map((col, colIndex) => {
@@ -268,6 +271,7 @@ const StoryDetail = () => {
       </ul>
     );
   };
+  useFacebookComment();
   return (
     <div className="story-detail">
       <div className="container">
@@ -284,6 +288,12 @@ const StoryDetail = () => {
             <div className="list-title">
               <h2>BÌNH LUẬN TRUYỆN</h2>
             </div>
+            <div
+              className="fb-comments"
+              data-href={window.location.href}
+              data-numposts="5"
+              data-width="100%"
+            ></div>
           </div>
           <div className="col-md-3">
             {sameAuthorStories ? (
