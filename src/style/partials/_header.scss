@@ -1,14 +1,14 @@
+.navbar {
+  a {
+    display: block;
+    @include colorHover(#fff, 0.8);
+  }
+}
 .header {
   background-color: $darkBlue;
   margin-bottom: 20px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-  a {
-    color: $whiteText;
 
-    &:hover {
-      color: white;
-    }
-  }
   .header__logo {
     display: block;
     width: 196px;
@@ -25,9 +25,6 @@
   }
   .dropdown.show {
     background-color: $darkBlue2;
-    a {
-      color: white !important;
-    }
   }
   .dropdown-menu {
     background-color: $darkBlue2;
@@ -38,8 +35,16 @@
       &:hover {
         background-color: $darkBlue;
       }
-      a {
-        display: block;
+    }
+
+    &.menu-config {
+      color: white;
+      min-width: 250%;
+      padding: 10px;
+      > li {
+        &:hover {
+          background: unset;
+        }
       }
     }
     &.menu-cols-3 {
@@ -60,9 +65,18 @@
   .form-inline {
     position: relative;
   }
-  &__search:focus-within + &__search-result {
-    opacity: 1;
-    visibility: visible;
+  &__search {
+    &:focus-within + &-result {
+      opacity: 1;
+      visibility: visible;
+    }
+    background: white;
+
+    button,
+    input {
+      background: none;
+      border: solid 1px transparent;
+    }
   }
   &__search-result {
     transition: all 5s;
@@ -77,19 +91,19 @@
     width: 100%;
     margin-top: 2px;
     box-shadow: 0 2px 10px #ababab;
-    a {
-      color: #555;
+    .list-group-item {
+      background: transparent;
       &:hover {
-        color: #555;
         background: #f5f5f5;
+        color: #555;
       }
+    }
+    a {
+      @include colorHover($primary, 0.8);
     }
   }
   .breadcrumb-wrap {
     background: #ececec;
     border-top: 1px solid #476171;
-    a {
-      color: inherit;
-    }
   }
 }

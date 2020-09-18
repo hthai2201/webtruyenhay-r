@@ -1,3 +1,13 @@
 $darkBlue: #14425d;
 $darkBlue2: #2f566d;
 $whiteText: #f2f2f2;
+$primary: #4e4e4e;
+$darkPrimary: rgba(255, 255, 255, 0.6);
+@mixin colorHover($color, $alpha: 1, $textDecoration: none, $important: null) {
+  color: $color $important;
+  &:hover,
+  &:focus {
+    color: rgba($color, $alpha) $important;
+    text-decoration: $textDecoration;
+  }
+}

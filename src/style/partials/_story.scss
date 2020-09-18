@@ -21,15 +21,6 @@
     justify-content: center;
     .name {
       font-weight: bold;
-      a,
-      a:hover,
-      a:focus {
-        color: #4e4e4e;
-      }
-      a:hover,
-      a:focus {
-        color: rgba($color: #4e4e4e, $alpha: 0.7);
-      }
     }
     .desc {
       margin-bottom: 3px;
@@ -50,9 +41,10 @@
     max-width: 270px;
     font-size: 12px;
     padding: 6px 10px;
+    background: none;
     &--active {
-      border: solid 1px #4e4e4e;
-      background: #4e4e4e;
+      border: solid 1px $primary;
+      background: $primary;
       color: white;
     }
     &:focus {
@@ -104,16 +96,6 @@
   }
   &__info {
     h4 {
-      a {
-        color: #083767;
-      }
-    }
-    a {
-      &:hover,
-      &:focus {
-        text-decoration: underline;
-        background-color: initial !important;
-      }
     }
   }
 }
@@ -170,5 +152,10 @@
       border-bottom: none;
       font-size: 24px;
     }
+  }
+}
+.chapter__nav-select {
+  select {
+    height: 45px;
   }
 }

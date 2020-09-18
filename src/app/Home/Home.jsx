@@ -70,46 +70,49 @@ const Home = () => {
   // render
   const renderAllStories = () => {
     return (
-      <RenderList
-        list={allStories}
-        loading={getAllStoriesLoading}
-        error={getAllStoriesError}
-        renderItem={story => {
-          const { slug, name, categories = [], chapters = [] } = story || {};
-          const lastChapter = chapters[chapters.length - 1] || {};
-          const {
-            chapterId: lastChapterId,
-            updatedAt: lastChapterUpdateTime,
-          } = lastChapter;
-          return (
-            <div key={slug} className="row border-row">
-              <div className="col-md-5 text-truncate">
-                <i className="fa fa-chevron-right mr-1" aria-hidden="true"></i>
+      <div className="row-striped">
+        <RenderList
+          list={allStories}
+          loading={getAllStoriesLoading}
+          error={getAllStoriesError}
+          renderItem={story => {
+            const { slug, name, categories = [], chapters = [] } = story || {};
+            const lastChapter = chapters[chapters.length - 1] || {};
+            const {
+              chapterId: lastChapterId,
+              updatedAt: lastChapterUpdateTime,
+            } = lastChapter;
+            return (
+              <div key={slug} className="row border-row">
+                <div className="col-md-5 text-truncate">
+                  <i
+                    className="fa fa-chevron-right mr-1"
+                    aria-hidden="true"
+                  ></i>
 
-                <Link to={`/${slug}`} className="text-primary ">
-                  {name}
-                </Link>
+                  <Link to={`/${slug}`}>{name}</Link>
+                </div>
+                <div className="col-md-3 text-truncate">
+                  <span>
+                    {categories.map(category => category.name).join(',')}
+                  </span>
+                </div>
+                <div className="col-md-2">
+                  <Link
+                    to={`/${slug}/chuong-${lastChapterId}`}
+                    className="text-info"
+                  >
+                    Chương {lastChapterId}
+                  </Link>
+                </div>
+                <div className="col-md-2">
+                  <span>{Funtional.fromNowTime(lastChapterUpdateTime)}</span>
+                </div>
               </div>
-              <div className="col-md-3 text-truncate">
-                <span>
-                  {categories.map(category => category.name).join(',')}
-                </span>
-              </div>
-              <div className="col-md-2">
-                <Link
-                  to={`/${slug}/chuong-${lastChapterId}`}
-                  className="text-info"
-                >
-                  Chương {lastChapterId}
-                </Link>
-              </div>
-              <div className="col-md-2">
-                <span>{Funtional.fromNowTime(lastChapterUpdateTime)}</span>
-              </div>
-            </div>
-          );
-        }}
-      />
+            );
+          }}
+        />
+      </div>
     );
   };
   const renderAllStoriesFull = () => {
@@ -249,31 +252,33 @@ const Home = () => {
                     </h2>
                   </div>
 
-                  {historyStories.map(story => {
-                    const { slug, name, lastReadChapter = {} } = story || {};
+                  <div className="row-striped">
+                    {historyStories.map(story => {
+                      const { slug, name, lastReadChapter = {} } = story || {};
 
-                    const { chapterId: lastChapterId } = lastReadChapter;
-                    return (
-                      <div key={slug} className="row border-row">
-                        <div className="col-6 text-truncate">
-                          <i
-                            className="fa fa-chevron-right mr-1"
-                            aria-hidden="true"
-                          ></i>
-                          <span className="">{name}</span>
-                        </div>
+                      const { chapterId: lastChapterId } = lastReadChapter;
+                      return (
+                        <div key={slug} className="row border-row">
+                          <div className="col-6 text-truncate">
+                            <i
+                              className="fa fa-chevron-right mr-1"
+                              aria-hidden="true"
+                            ></i>
+                            <span className="">{name}</span>
+                          </div>
 
-                        <div className="col-6">
-                          <Link
-                            to={`/${slug}/chuong-${lastChapterId}`}
-                            className="text-info"
-                          >
-                            Đọc tiếp C{lastChapterId}
-                          </Link>
+                          <div className="col-6">
+                            <Link
+                              to={`/${slug}/chuong-${lastChapterId}`}
+                              className="text-info"
+                            >
+                              Đọc tiếp C{lastChapterId}
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               ) : null}
 

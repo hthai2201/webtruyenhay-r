@@ -5,23 +5,21 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.4rem;
   background: url(//static.8cache.com/img/bg.jpg) top center repeat-x #f4f4f4;
-  color: #4e4e4e;
+  color: $primary;
+
+  a {
+    @include colorHover($primary, 0.8, underline);
+  }
   ul {
     padding: 5px;
-  }
-  a {
-    text-decoration: none;
-    &:hover {
-      text-decoration: none;
-    }
-    &:focus {
-    }
+    list-style: none;
   }
   button,
-  input {
+  input,
+  .button {
     padding: 5px 10px;
     border: none;
-    background: white;
+
     &:focus {
       border: none;
       outline: none;
@@ -30,15 +28,17 @@ body {
   section {
     margin-bottom: 15px;
   }
-  ul {
-    list-style: none;
+  .custom-select {
+    font-size: inherit;
   }
-  .button {
-    padding: 5px 10px;
-    display: inline-block;
-    &:hover,
+  select {
+    background: #d2d2d2;
+    border: 1px solid;
+
     &:focus {
-      outline: none;
+      outline: none !important;
+      box-shadow: none !important;
+      border: 1px solid !important;
     }
   }
   .list-title {
@@ -48,18 +48,11 @@ body {
 
     text-transform: uppercase;
     border-bottom: 1px solid #ccc;
-
-    a,
-    a:hover,
-    a:focus {
-      color: #4e4e4e;
-    }
     select {
-      width: unset;
       font-size: 20px;
-      background: #d2d2d2;
-      border: 1px solid;
+      width: unset;
     }
+
     h2 {
       font-family: 'Roboto Condensed', Tahoma, sans-serif;
       font-size: 20px;
@@ -69,26 +62,23 @@ body {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      border-bottom: 1px solid #4e4e4e;
+      border-bottom: 1px solid $primary;
       margin-bottom: 0;
+      > a:hover,
+      > a:focus {
+        text-decoration: none;
+      }
+    }
+    a {
+      @include colorHover($primary, 0.8, underline);
     }
   }
   .panel {
     background: #ecf0f1;
     padding: 0 10px;
     margin-bottom: 20px;
-    .row {
-      a {
-        display: block;
-        &:hover {
-          background: #d2d2d2;
-        }
-      }
-    }
-    a,
-    a:hover,
-    a:focus {
-      color: #4e4e4e;
+    .list-title {
+      margin-bottom: 5px;
     }
   }
   .border-row {
@@ -104,6 +94,8 @@ body {
   }
   .label-primary {
     background: #2a5893;
+    color: white;
+    border: solid 1px #2a5893;
   }
   .label-full {
     width: 34px;
@@ -155,6 +147,9 @@ body {
     .page-item {
       border-bottom: 1px solid #ddd;
       border-top: 1px solid #ddd;
+      .page-link {
+        background: none;
+      }
 
       &:first-child {
         border-left: 1px solid #ddd;
@@ -172,39 +167,24 @@ body {
       }
       .page-link {
         padding: 0.5rem 1rem;
-        color: #4e4e4e;
+        color: $primary;
         border: none;
       }
     }
   }
-  a.text-primary {
-    color: #4e4e4e !important;
-    &:hover,
-    &:focus {
-      color: #4e4e4e !important;
-      text-decoration: underline;
-    }
-  }
-  a {
-    color: #4e4e4e;
-    &:hover,
-    &:focus {
-      color: #4e4e4e;
-      text-decoration: underline;
-    }
-  }
+
   .bg-none {
-    background: transparent;
+    background: transparent !important;
   }
+
   .primary-btn {
+    @include colorHover(white, 0.8);
     background: #34495e;
-    color: white;
+    border: solid 1px #34495e;
 
     &:focus,
     &:hover {
       background: rgba($color: #34495e, $alpha: 0.8);
-      color: rgba($color: white, $alpha: 0.8);
-      text-decoration: none;
     }
   }
   .box-notice {
@@ -215,10 +195,9 @@ body {
     border-radius: 5px;
   }
   .disabled {
-    pointer-events: none;
-    user-select: none;
     opacity: 0.5;
   }
+  .disabled,
   .no-click {
     pointer-events: none;
     user-select: none;

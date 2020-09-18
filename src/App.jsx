@@ -16,6 +16,7 @@ import StoryDetail from './app/Story/StoryDetail';
 import StoryChapter from './app/Story/StoryChapter';
 import FullStory from './app/Story/FullStory';
 import Loading from './components/general/Loading';
+import useTheme from './hook/useTheme';
 
 const ErrorComponent = ({ error }) => (
   <div className="container">
@@ -27,6 +28,7 @@ const ErrorComponent = ({ error }) => (
 );
 
 const App = () => {
+  const [theme, setTheme] = useTheme();
   // category
   const allCategories = useSelector(_ => _.category.allCategories);
   const getAllCategoriesLoading = useSelector(
@@ -51,29 +53,31 @@ const App = () => {
   }, []);
   const errorHandle = (/* error, componentStack */) => {};
   return (
-    <ErrorBoundary FallbackComponent={ErrorComponent} onError={errorHandle}>
-      <Router history={history}>
-        <Header
-          allCategories={allCategories}
-          getAllCategoriesLoading={getAllCategoriesLoading}
-          getAllCategoriesError={getAllCategoriesError}
-        />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/danh-sach/hot" component={HotStory} />
-          <Route exact path="/danh-sach/full" component={FullStory} />
-          <Route exact path="/the-loai/:categorySlug" component={Category} />
-          <Route exact path="/tim-kiem" component={SearchStory} />
-          <Route exact path="/:storySlug" component={StoryDetail} />
-          <Route
-            exact
-            path="/:storySlug/chuong-:chapterId"
-            component={StoryChapter}
+    <div className={`${theme.dark ? 'dark-mode' : ''}`}>
+      <ErrorBoundary FallbackComponent={ErrorComponent} onError={errorHandle}>
+        <Router history={history}>
+          <Header
+            allCategories={allCategories}
+            getAllCategoriesLoading={getAllCategoriesLoading}
+            getAllCategoriesError={getAllCategoriesError}
           />
-        </Switch>
-        <Footer allCategories={allCategories} />
-      </Router>
-    </ErrorBoundary>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/danh-sach/hot" component={HotStory} />
+            <Route exact path="/danh-sach/full" component={FullStory} />
+            <Route exact path="/the-loai/:categorySlug" component={Category} />
+            <Route exact path="/tim-kiem" component={SearchStory} />
+            <Route exact path="/:storySlug" component={StoryDetail} />
+            <Route
+              exact
+              path="/:storySlug/chuong-:chapterId"
+              component={StoryChapter}
+            />
+          </Switch>
+          <Footer allCategories={allCategories} />
+        </Router>
+      </ErrorBoundary>
+    </div>
   );
 };
 

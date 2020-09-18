@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { storyActions } from '../../_actions';
 import Loading from './Loading';
 import Breadcrumb from './Breadcrumb';
+import { themeOptions } from '../../_constants/config.constants';
+import useTheme from '../../hook/useTheme';
 
 const Header = ({ allCategories = [] }) => {
   const [q, setQ] = useState('');
@@ -14,7 +16,7 @@ const Header = ({ allCategories = [] }) => {
   const searchStoriesError = useSelector(_ => _.story.searchStoriesError);
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const [theme, setTheme] = useTheme();
   const numCol = 3;
   const colItemCount = Math.ceil(allCategories.length / numCol);
   const allCategoriesSlice = [...Array(3).keys()].map((_, index) =>
@@ -24,6 +26,9 @@ const Header = ({ allCategories = [] }) => {
     searchWords => dispatch(storyActions.searchStories({ searchWords })),
     1000
   );
+  const onChangeTheme = (prop, value) => {
+    setTheme({ [prop]: value });
+  };
   const onClickSearchBtn = e => {
     e.preventDefault();
     if (q) {
@@ -141,6 +146,54 @@ const Header = ({ allCategories = [] }) => {
                         </div>
                       );
                     })}
+                  </div>
+                </ul>
+              </li>
+              <li className="nav-item dropdown allow-focus">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  to="/"
+                  id="navbarDropdown3"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fa fa-cog" aria-hidden="true"></i> Tuỳ chỉnh
+                </Link>
+
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                <ul
+                  className="dropdown-menu menu-config"
+                  role="menu"
+                  onClick={e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  <div className="theme-config">
+                    <div className="row">
+                      <div className="col-md-5 text-right my-auto">
+                        Màu nền:
+                      </div>
+                      <div className="col-md-7">
+                        <select
+                          value={theme.background}
+                          onChange={e =>
+                            onChangeTheme('background', e.target.value)
+                          }
+                          className="custom-select"
+                        >
+                          {themeOptions.BACKGROUND.map(bg => {
+                            return (
+                              <option key={bg.id} value={bg.id}>
+                                {bg.name}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </ul>
               </li>

@@ -293,6 +293,7 @@ const StoryDetail = () => {
               data-href={window.location.href}
               data-numposts="5"
               data-width="100%"
+              
             ></div>
           </div>
           <div className="col-md-3">

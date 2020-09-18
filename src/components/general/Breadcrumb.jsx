@@ -8,8 +8,8 @@ const Breadcrumb = () => {
 
   let baseLink = '/';
   return (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
+    <nav aria-label="breadcrumb ">
+      <ol className="breadcrumb bg-none">
         {location.pathname === '/' ? (
           <li className="breadcrumb-item">
             Đọc truyện online, đọc truyện chữ, truyện full, truyện hay. Tổng hợp

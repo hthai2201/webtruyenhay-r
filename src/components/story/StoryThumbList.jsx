@@ -72,7 +72,7 @@ const StoryThumbList = ({
         <h2>{title}</h2>
       </div>
       <div className="list">
-        {renderAllStories()}
+        <div className="row-striped">{renderAllStories()}</div>
 
         <Pagination
           align="center"

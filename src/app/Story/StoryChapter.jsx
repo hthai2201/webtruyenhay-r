@@ -33,7 +33,6 @@ const StoryChapter = () => {
       chapterId &&
       storySlug &&
       !getChapterLoading &&
-      !getChapterError &&
       (!chapter ||
         chapter.chapterId !== parseInt(chapterId, 10) ||
         (chapter.story && chapter.story.slug !== storySlug))
@@ -112,7 +111,9 @@ const StoryChapter = () => {
         )}
 
         <Link
-          to={`/${story.slug}/chuong-${story.chapterCount}`}
+          to={`/${story.slug}/chuong-${
+            story.chapterCount || story.chapters.length - 1
+          }`}
           className="button chapter__nav-item  btn-success ml-2"
         >
           Chương tiếp
